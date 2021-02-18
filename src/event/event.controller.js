@@ -4,10 +4,9 @@ const router = express.Router();
 const Joi = require('joi');
 const { publishMessageToPubTopic } = require('./event.service');
 const validateRequest = require('../middleware/validate-request');
-
 router.get('/', eventHealthCheck)
 router.post('/save', saveEventValidate, saveEvent);
-
+const dummy = require("../data/dummyEvents.json")
 module.exports = router;
 
 function saveEventValidate(req, res, next) {
@@ -38,3 +37,4 @@ function eventHealthCheck(req, res, next) {
     res.json("Event Alive...")
 
 }
+
