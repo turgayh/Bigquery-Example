@@ -12,8 +12,9 @@ router.get('/', userHealthCheck)
 router.get('/total-user', totalUser)
 module.exports = router;
 
-async function totalUser(params) {
-    getTotalUser()
+async function totalUser(req, res, next) {
+    let totalUser = await getTotalUser()
+    res.json({ total_user: totalUser })
 }
 
 function userHealthCheck(req, res, next) {

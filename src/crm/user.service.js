@@ -1,14 +1,38 @@
 
 // Import the Google Cloud client library
 const { BigQuery } = require('@google-cloud/bigquery');
-const config = require('../../config/cloud.json')
 module.exports = { getTotalUser }
+const { redisClient } = require('../helper/redis-db')
+
+const totalUserInfoCheckInCache = () => new Promise(function (resolve, reject) {
+    var current = new Date().getTime();
+    var ten_minutes_from_now = current - 600000;
+    redisClient.zrangebyscore('redis_total_user', ten_minutes_from_now, current, function (err, res) {
+        if (!err)
+            resolve(res) // return rank
+        else
+            resolve(false) //
+    });
+})
 
 async function getTotalUser() {
-    // Create a client
-    const bigqueryClient = new BigQuery({ keyFile: config });
+    var current = new Date().getTime();
+    let flag = 0
+    let totalUser = 0;
+    await totalUserInfoCheckInCache().then((res) => {
+        if (res.length == 0) {
+            flag = 1;
+        } else {
+            let size = res.length
+            totalUser = res[size - 1]
+        }
+    })
 
-    const sqlQuery = `WITH hll_count AS (
+    if (flag == 1) {
+        // Create a client
+        const bigqueryClient = new BigQuery();
+        // Hyperloglogs algorithm (estimation method) 
+        const sqlQuery = `WITH hll_count AS (
         SELECT  
         HLL_COUNT.INIT(user_id) total_user 
         FROM \`supple-folder-297118.codeway_bigquery.event\`
@@ -16,40 +40,22 @@ async function getTotalUser() {
         SELECT  hll_count. MERGE (total_user) 
         FROM hll_count `;
 
-    // const options = {
-    //     query: sqlQuery,
-    //     // Location must match that of the dataset(s) referenced in the query.
-    //     location: 'US',
-    //     params: { corpus: 'romeoandjuliet', min_word_count: 250 },
-    //     useQueryCache: false,
-    // };
-    const options = {
-        query: sqlQuery,
-        location: 'US',
-        useQueryCache: true,
+
+        const options = {
+            query: sqlQuery,
+            location: 'US',
+            useQueryCache: true,
+        }
+
+        try {
+            const [job] = await bigqueryClient.createQueryJob(options);
+            const [rows] = await job.getQueryResults();
+            redisClient.zadd('redis_total_user', current, rows[0]['f0_'])
+            totalUser = rows[0]['f0_'];
+        } catch (error) {
+            throw error
+        }
     }
+    return totalUser;
 
-    try {
-
-        // Run the query as a job
-        const [job] = await bigqueryClient.createQueryJob(options);
-        console.log(`Job ${job.id} started.`);
-
-        // Wait for the query to finish
-        const [rows] = await job.getQueryResults();
-
-        // Print the results
-        console.log('Rows:');
-        rows.forEach(row => console.log(row));
-
-        // Print job statistics
-        console.log('JOB STATISTICS:')
-        console.log(`Status: ${job.metadata.status.state}`);
-        console.log(`Creation time: ${job.metadata.statistics.creationTime}`);
-        console.log(`Start time: ${job.metadata.statistics.startTime}`);
-        console.log(`Statement type: ${job.metadata.statistics.query.statementType}`);
-
-    } catch (error) {
-        throw error
-    }
 }

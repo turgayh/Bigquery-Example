@@ -1,0 +1,17 @@
+
+version: '3.7'
+
+services:  
+  dev_redis:
+    image: redis
+    container_name: redis-local
+    restart: on-failure
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"  
+    volumes:
+      - redis_data_volume:/data
+
+volumes:
+  redis_data_volume:
+  dynamodb_data_volume:
