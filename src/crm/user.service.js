@@ -12,6 +12,7 @@ const totalUserInfoCheckInCache = () => new Promise(function (resolve, reject) {
             resolve(res) // return rank
         else
             resolve(false) //
+        reject(false)
     });
 })
 
@@ -24,7 +25,7 @@ async function getTotalUser() {
             flag = 1;
         } else {
             let size = res.length
-            totalUser = res[size - 1]
+            totalUser = parseInt(res[size - 1])
         }
     })
 
@@ -50,6 +51,7 @@ async function getTotalUser() {
         try {
             const [job] = await bigqueryClient.createQueryJob(options);
             const [rows] = await job.getQueryResults();
+            //Total user info add to redis
             redisClient.zadd('redis_total_user', current, rows[0]['f0_'])
             totalUser = rows[0]['f0_'];
         } catch (error) {

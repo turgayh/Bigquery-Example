@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 // 
 app.use('/api/v1/event', require('./src/event/event.controller'));
 app.use('/api/v1/user-stat', require('./src/crm/user-stat.controller'));
+app.use('/api/v1/daily-stat', require('./src/crm/daily-stat.controller'));
 
 // global error handler
 app.use(errorHandler);
