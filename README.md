@@ -9,9 +9,9 @@
 **Host: Adres** 
 
 ```bash
- [GET]   : /api/v1/user-stat/total-user
  [POST]  : /api/v1/event/save
- [POST]  : /api/v1/daily-stat/active-user
+ [GET]   : /api/v1/crm/user-stat/total-user
+ [POST]  : /api/v1/crm/daily-stat/active-user
 ```
 
 ### Tech Stack
