@@ -2,7 +2,7 @@
 
 ## System Design 
 
-[]('./../docs/images/design.png')
+![]('/../docs/images/design.png')
 
 ```shell
 topic: codeway-topic
