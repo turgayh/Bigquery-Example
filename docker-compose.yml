@@ -14,4 +14,3 @@ services:
 
 volumes:
   redis_data_volume:
-  dynamodb_data_volume:
