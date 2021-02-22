@@ -38,15 +38,12 @@ Google Cloud Dataflow
 ### API Guide 
 
 #### /api/v1/event/save
-
 <br/>
-<br/>
-
-To get user information
+Event log send to pub/sub query.
 
 | request                                                      | response                         |
 | ------------------------------------------------------------ | -------------------------------- |
-| - user_id: **String** , require: **true**,unique:**true**  <br/> - session_id: **String** , require: **true** <br/> - app_id: **String** , require: **true** <br/>  - type: **String** , require: **true** <br/>  - event_name: **String** , require: **true** <br/>  - event_time: **Number** , require: **true** <br/> - page: **String** , require: **true** <br/>   - country: **String** , require: **true** <br/>  - region: **String** , require: **true** <br/>  - city: **String** , require: **true** <br/> |  |
+| - user_id: **String** , require: **true**,unique:**true**  <br/> - session_id: **String** , require: **true** <br/> - app_id: **String** , require: **true** <br/>  - type: **String** , require: **true** <br/>  - event_name: **String** , require: **true** <br/>  - event_time: **Number** , require: **true** <br/> - page: **String** , require: **true** <br/>   - country: **String** , require: **true** <br/>  - region: **String** , require: **true** <br/>  - city: **String** , require: **true** <br/> | message_id: **String**  |
 
 
 ```shell
