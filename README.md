@@ -6,7 +6,7 @@
 ![](/docs/images/design.png)
 
 ## API 
-**Host: https://144.126.248.117** 
+**Host: http://144.126.248.117** 
 
 ```bash
  [POST]  : /api/v1/event/save
