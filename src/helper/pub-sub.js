@@ -1,6 +1,6 @@
 const { PubSub } = require('@google-cloud/pubsub');
 
-const pubSubClient = new PubSub({ keyFile: "/Users/hakanturgay/Desktop/cloud.json" });
+const pubSubClient = new PubSub();
 
 async function sendMessage(data) {
     // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
