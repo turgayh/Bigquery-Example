@@ -1,6 +1,6 @@
 const { BigQuery } = require('@google-cloud/bigquery');
 const { redisClient } = require('../helper/redis-db')
-const { dateFormating } = require('../helper/common-function')
+const { dateFormating, isDateToday } = require('../helper/common-function')
 const bigqueryClient = new BigQuery();
 
 
@@ -33,13 +33,16 @@ async function getDailyActiveUserInfo(data) {
     let day = data.date.getDate();
 
     let parseDate = dateFormating(data.date);
-    await checkDailyDistinctUserInRedis(parseDate)
-        .then((res) => {
-            if (res != 0 && res != null)
-                distinct_user = parseInt(res);
-            else
-                flag = 1; //Execute query 
-        })
+
+    if (isDateToday(year, month, day) == false) {
+        await checkDailyDistinctUserInRedis(parseDate)
+            .then((res) => {
+                if (res != 0 && res != null)
+                    distinct_user = parseInt(res);
+                else
+                    flag = 1; //Execute query 
+            })
+    }
 
     if (flag) {
         const query = `SELECT
@@ -60,7 +63,7 @@ async function getDailyActiveUserInfo(data) {
 
         const [job] = await bigqueryClient.createQueryJob(options);
         const [rows] = await job.getQueryResults();
-        
+
         if (rows[0] != null && rows[0]['distinct_users'] != null) {
             await redisClient.zadd('redis_daily_distinct_user', rows[0]['distinct_users'], parseDate);
             //Total user info add to redis

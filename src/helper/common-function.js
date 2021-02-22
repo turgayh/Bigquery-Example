@@ -9,4 +9,15 @@ const dateFormating = (date) => {
     return year + month + day;
 }
 
-module.exports = { dateFormating }
+
+const isDateToday = (year, month, day) => {
+    let current = new Date();
+    let currentYear = current.getFullYear();
+    let currentMonth = current.getMonth() + 1;
+    let currentDay = current.getDate();
+    if (year == currentYear && month == currentMonth && day == currentDay)
+        return true
+    return false
+}
+
+module.exports = { dateFormating, isDateToday }

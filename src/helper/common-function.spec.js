@@ -1,8 +1,14 @@
+const { dateFormating, isDateToday } = require('./common-function');
 
-const { dateFormating } = require('./common-function');
+describe("isDateToday Test", () => {
+    it("Should dummy parameter return false ", () => {
+        let result = isDateToday(2021, 2, 20);
+        expect(result).toBe(false);
+    }
+    )
+})
 
-
-describe("Date Formating Test", () => {
+describe("dateFormating Test", () => {
     it("Valid parameter should return 8 digit string", () => {
         let date = new Date('2020-08-25')
         let result = dateFormating(date);
