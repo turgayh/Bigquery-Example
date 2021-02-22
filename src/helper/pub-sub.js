@@ -1,6 +1,7 @@
 const { PubSub } = require('@google-cloud/pubsub');
-
-const pubSubClient = new PubSub();
+const dotenv = require('dotenv')
+dotenv.config()
+const pubSubClient = new PubSub({ keyFile: process.env.gcloud_keyfile_path });
 
 async function sendMessage(data) {
     // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
