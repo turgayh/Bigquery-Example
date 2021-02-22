@@ -51,7 +51,7 @@ Event log send to pub/sub query.
 <br/>
 <br/>
 
-To get total user. It will update every 10 minute.  
+To get total user. It will update every 10 minute. (Redis cache data update every 10 minuete!)
 
 | request                                                      | response                         |
 | ------------------------------------------------------------ | -------------------------------- |
