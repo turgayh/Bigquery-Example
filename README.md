@@ -1,7 +1,7 @@
 # Bigquery-Example
 
 - [Bigquery-Example](#bigquery-example)
-  * [System Design](#system-design)
+    + [System Design](#system-design)
     + [API](#api)
     + [Tech Stack](#tech-stack)
       - [Development](#development)
@@ -14,8 +14,7 @@
 
 
 
-
-## System Design 
+### System Design 
 
 
 ![](/docs/images/design.png)
