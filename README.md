@@ -1,5 +1,19 @@
 # Bigquery-Example
 
+- [Bigquery-Example](#bigquery-example)
+  * [System Design](#system-design)
+  * [API](#api)
+    + [Tech Stack](#tech-stack)
+      - [Development](#development)
+      - [Deployment](#deployment)
+    + [API Guide](#api-guide)
+      - [/api/v1/event/save](#-api-v1-event-save)
+      - [/api/v1/crm/user-stat/total-user](#-api-v1-crm-user-stat-total-user)
+      - [/api/v1/crm/daily-stat/active-user](#-api-v1-crm-daily-stat-active-user)
+    + [Postman Collection](#postman-collection)
+
+
+
 ## System Design 
 
 
@@ -71,10 +85,6 @@ To get distinct user in specific day.
 
 
 
-```shell
-topic: codeway-topic
-subscription: codeway-subscription
-projects/supple-folder-297118/subscriptions/codeway-subscription
-projects/supple-folder-297118/topics/codeway-topic
-supple-folder-297118:codeway_bigquery.event
-```
+### Postman Collection
+
+- https://www.getpostman.com/collections/872dc723a069a868b117
